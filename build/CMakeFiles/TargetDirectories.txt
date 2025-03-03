@@ -1,0 +1,4 @@
+/root/CodeSpace/EduModuo/build/CMakeFiles/EduModuo.dir
+/root/CodeSpace/EduModuo/build/CMakeFiles/test_server.dir
+/root/CodeSpace/EduModuo/build/CMakeFiles/edit_cache.dir
+/root/CodeSpace/EduModuo/build/CMakeFiles/rebuild_cache.dir

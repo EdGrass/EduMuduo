@@ -1,0 +1,2 @@
+/usr/bin/ar qc libEduModuo.a CMakeFiles/EduModuo.dir/src/CurrentThread.cc.o
+/usr/bin/ranlib libEduModuo.a

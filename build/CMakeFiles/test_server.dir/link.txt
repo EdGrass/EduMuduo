@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/test_server.dir/src/test.cpp.o -o test_server  libEduModuo.a 
