@@ -18,8 +18,7 @@ public:
 
         server_.setThreadNum(3);
     }
-    void start()
-    {
+    void start(){
         server_.start();
     }
 
@@ -32,8 +31,7 @@ private:
         }
     }
 
-    void onMessage(const TcpConnectionPtr &conn, Buffer *buf, Timestamp time)
-    {
+    void onMessage(const TcpConnectionPtr &conn, Buffer *buf, Timestamp time) {
         std::string msg = buf->retrieveAllAsString();
         conn->send(msg);
     }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(EduModuo)
+project(EduMuduo)
 
 find_package(fmt REQUIRED)
 
