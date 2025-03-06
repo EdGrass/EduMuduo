@@ -11,6 +11,11 @@
 #include "Noncopyable.hpp"
 #include "Timestamp.hpp"
 
+/*
+ * Implements a leveled logging class supporting three severity levels:  
+ * DEBUG, ERROR, and FATAL  
+ */
+
 enum class LogLevel : uint8_t {
     Debug,  
     Error,  

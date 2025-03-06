@@ -6,6 +6,11 @@
 #include "Timestamp.hpp"
 #include "EventLoop.hpp"
 
+/*
+ * Poller wraps a map to manage sockfd and their corresponding channels.  
+ * Serves as a demultiplexer, later encapsulated into an epoll-based implementation.  
+ */  
+
 class Channel;
 
 class Poller : Noncopyable {

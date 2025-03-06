@@ -5,6 +5,12 @@
 #include <system_error>
 #include <array>
 
+/*
+ * Encapsulates a buffer  
+ * The application writes data to the buffer, and the TCP send buffer  
+ * uses dual pointers to implement asynchronous data writing.  
+ */  
+
 class Buffer {
 public:
     static constexpr size_t kCheapPrepend = 8;

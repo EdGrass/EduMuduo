@@ -10,6 +10,15 @@
 #include "Socket.hpp"
 #include "Noncopyable.hpp"
 
+/*
+ * Mainly encapsulates a non-blocking listenfd, responsible for accepting new connections,
+ * wrapping them into channels, and passing them to baseloop.
+ * 
+ * Since it's solely for listening, a default ReadCallback (newConnectionCallback) is 
+ * provided during construction, which essentially corresponds to the tcpserver's 
+ * newConnection method.
+ */
+
 class Acceptor : Noncopyable {
 public:
     using NewConnectionCallback = std::function<void(int, const InetAddress&)>;

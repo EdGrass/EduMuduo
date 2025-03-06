@@ -5,6 +5,10 @@
 #include <string_view>
 #include <system_error>
 
+/*  
+ * Encapsulates the IPv4 address structure  
+ */  
+
 class InetAddress {
 public:
     explicit InetAddress(uint16_t port = 0, std::string_view ip = "127.0.0.1");

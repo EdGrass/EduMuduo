@@ -15,6 +15,32 @@
 #include "Noncopyable.hpp"
 #include "Callbacks.hpp"
 
+/*
+ * A class designed for direct use by programmers, including key components:  
+ * - Acceptor      : Listens for new connections, eventually encapsulating them  
+ *                   into TcpConnection objects and assigning to subloops  
+ * - EventLoopThreadPool : Thread pool for handling I/O operations  
+ * - ConnectionMap : Maintains all active connections  
+ * - etc.  
+ * Allows programmers to focus on callback function logic.  
+ * 
+ * The workflow of the start with muduo library:  
+ * 1. Construct TcpServer object  
+ * 2. Call start() to:  
+ *    - Launch thread pool (loopthread.startLoop())  
+ *    - Begin acceptor.listen()  
+ * 3. Start baseloop.loop()  
+ * 4. Use wakeupFd (created via socketpair) to wake up subloops, enabling  
+ *    inter-loop communication  
+ * 5. When Acceptor detects a new connection:  
+ *    - Invokes TcpServer::newConnection  
+ *    - Selects subloop (*ioLoop) via round-robin scheduling  
+ *    - Constructs TcpConnection object  
+ * 6. runInLoop delivers TcpConnection object to subloop  
+ * 7. TcpConnection::connectEstablished() triggers  
+ *    TcpConnection::connectionCallback  
+ */  
+
 class TcpServer : Noncopyable {
 public:
     enum class Option { kNoReusePort, kReusePort };

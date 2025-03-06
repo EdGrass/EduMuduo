@@ -10,6 +10,11 @@
 #include "Noncopyable.hpp"
 #include "Thread.hpp"
 
+/*
+ * Creates a unique loop during construction  
+ * and starts the event loop by calling loop.loop().  
+ */  
+
 class EventLoop;
 
 class EventLoopThread : Noncopyable {

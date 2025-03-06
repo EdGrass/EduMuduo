@@ -11,8 +11,12 @@
 #include "Logger.hpp"
 #include "InetAddress.hpp"
 
-class Socket : Noncopyable
-{
+/*
+ * Encapsulates a socketfd and provides basic socket operations  
+ * (e.g., creation, binding, listening, closing)  
+ */  
+
+class Socket : Noncopyable{
 public:
     enum OptionState : int { DISABLE = 0, ENABLE = 1 };
 
@@ -20,16 +24,14 @@ public:
     ~Socket() noexcept { if(sockfd_ >= 0) ::close(sockfd_); }
 
     Socket(Socket&& other) noexcept : sockfd_(other.release()) {}
-    Socket& operator=(Socket&& other) noexcept
-    {
+    Socket& operator=(Socket&& other) noexcept{
         reset(other.release());
         return *this;
     }
 
     [[nodiscard]] int fd() const noexcept { return sockfd_; }
 
-    void bindAddress(const InetAddress& localaddr)
-    {
+    void bindAddress(const InetAddress& localaddr) {
         const auto* addr = localaddr.getSockAddr();
         if (::bind(sockfd_, 
                   reinterpret_cast<const sockaddr*>(addr),
@@ -39,17 +41,14 @@ public:
         }
     }
 
-    void listen()
-    {
+    void listen(){
         constexpr int kBacklog = 1024;
-        if (::listen(sockfd_, kBacklog) != 0)
-        {
+        if (::listen(sockfd_, kBacklog) != 0){
             LOG_FATAL("Listen failed on fd: %d", sockfd_);
         }
     }
 
-    int accept(InetAddress* peeraddr) noexcept
-    {
+    int accept(InetAddress* peeraddr) noexcept {
         sockaddr_in addr{};
         socklen_t len = sizeof(addr);
         
@@ -64,41 +63,33 @@ public:
         return connfd;
     }
 
-    void shutdownWrite() noexcept
-    {
-        if (::shutdown(sockfd_, SHUT_WR) < 0)
-        {
+    void shutdownWrite() noexcept{
+        if (::shutdown(sockfd_, SHUT_WR) < 0){
             LOG_ERROR("Shutdown write error on fd: %d", sockfd_);
         }
     }
 
     template<int Level, int OptName>
-    void setOption(OptionState state) noexcept
-    {
+    void setOption(OptionState state) noexcept{
         const int optval = static_cast<int>(state);
-        if (::setsockopt(sockfd_, Level, OptName, &optval, sizeof(optval)) < 0)
-        {
+        if (::setsockopt(sockfd_, Level, OptName, &optval, sizeof(optval)) < 0){
             LOG_ERROR("Set socket option %d failed on fd: %d", OptName, sockfd_);
         }
     }
 
-    void setTcpNoDelay(OptionState on) noexcept
-    {
+    void setTcpNoDelay(OptionState on) noexcept {
         setOption<IPPROTO_TCP, TCP_NODELAY>(on);
     }
 
-    void setReuseAddr(OptionState on) noexcept
-    {
+    void setReuseAddr(OptionState on) noexcept {
         setOption<SOL_SOCKET, SO_REUSEADDR>(on);
     }
 
-    void setReusePort(OptionState on) noexcept
-    {
+    void setReusePort(OptionState on) noexcept {
         setOption<SOL_SOCKET, SO_REUSEPORT>(on);
     }
 
-    void setKeepAlive(OptionState on) noexcept
-    {
+    void setKeepAlive(OptionState on) noexcept {
         setOption<SOL_SOCKET, SO_KEEPALIVE>(on);
     }
 
@@ -113,8 +104,7 @@ public:
 
 private:
     int release() noexcept { return std::exchange(sockfd_, -1); }
-    void reset(int fd = -1) noexcept
-    {
+    void reset(int fd = -1) noexcept {
         if(sockfd_ >= 0) ::close(sockfd_);
         sockfd_ = fd;
     }

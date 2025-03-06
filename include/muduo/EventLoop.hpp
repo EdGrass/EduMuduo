@@ -11,6 +11,20 @@
 #include "CurrentThread.hpp"
 #include "Logger.hpp"
 
+/*
+ * Reactors in the model, responsible for:  
+ * - Event looping  
+ * - Event dispatching  
+ * - Event handling  
+ * 
+ * Contains the following key components:  
+ * - activeChannels_ : Stores currently active Channels  
+ * - wakeupFd_       : Used by mainloop to wake up subloops. Writing data to  
+ *                     wakeupFd_ will trigger loop awakening.  
+ * - pendingFunctors_: Ensures all tasks are executed within the loop's thread  
+ *                     during a single iteration.  
+ */
+
 class Poller;
 class Channel;
 

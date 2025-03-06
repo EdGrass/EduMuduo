@@ -5,14 +5,10 @@
 #include "Poller.hpp"
 #include "EpollPoller.hpp"
 
-Poller *Poller::newDefaultPoller(EventLoop *loop)
-{
-    if (::getenv("MUDUO_USE_POLL"))
-    {
+Poller *Poller::newDefaultPoller(EventLoop *loop){
+    if (::getenv("MUDUO_USE_POLL")){
         return nullptr; 
-    }
-    else
-    {
+    } else {
         return new EPollPoller(loop); 
     }
 }

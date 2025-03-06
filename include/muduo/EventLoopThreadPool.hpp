@@ -10,6 +10,11 @@
 #include "EventLoop.hpp"
 #include "EventLoopThread.hpp"
 
+/*
+ * getNextLoop: Retrieves the next subloop object via round-robin scheduling  
+ * One loop per thread  
+ */
+
 class EventLoopThreadPool : Noncopyable {
 public:
     using ThreadInitCallback = std::function<void(EventLoop*)>;

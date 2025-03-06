@@ -8,6 +8,11 @@
 #include <sstream>
 #include <iomanip>
 
+/*
+ * Implements a Timestamp class for retrieving the current time  
+ * and generating formatted output (e.g. "YYYY-MM-DD HH:mm:ss.ms").  
+ */  
+
 class Timestamp;
 
 class Timestamp {

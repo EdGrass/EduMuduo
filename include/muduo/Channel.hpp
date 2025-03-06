@@ -9,6 +9,17 @@
 #include "Logger.hpp"
 #include "EventLoop.hpp"
 
+/*
+ * Channel primarily encapsulates an fd, events (events the fd is interested in),  
+ * revents (specific events that occurred, returned by the poller),  
+ * and a set of callback functions to handle different events.  
+ * 
+ * Will be further encapsulated into:  
+ * - Acceptor channel (listenfd)  
+ * - Connection channel (connfd)  
+ * - Wakeup channel (wakeupfd)  
+ */  
+
 class EventLoop;
 
 class Channel : Noncopyable

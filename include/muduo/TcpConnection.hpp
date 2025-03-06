@@ -16,6 +16,18 @@
 #include "Socket.hpp"
 #include "Timestamp.hpp"
 
+/*
+ * Represents a connected client with a TcpConnection object, all residing in subloops.  
+ * Encapsulates:  
+ * - Socket (connfd)  
+ * - Channel  
+ * - LocalAddr (local address)  
+ * - PeerAddr (remote peer address)  
+ * - InputBuffer & OutputBuffer  
+ * - Connection state  
+ * - Callback functions  
+ */  
+
 class TcpConnection : Noncopyable,
                       public std::enable_shared_from_this<TcpConnection> {
 public:
