@@ -32,8 +32,9 @@ private:
     }
 
     void onMessage(const TcpConnectionPtr &conn, Buffer *buf, Timestamp time) {
-        std::string msg = buf->retrieveAllAsString();
+        std::string msg = buf->ret`rieveAllAsString();
         conn->send(msg);
+		conn->shutdown();
     }
 
     EventLoop *loop_;
